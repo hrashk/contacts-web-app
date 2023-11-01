@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts Web App</title>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>id</th><th>first name</th><th>last name</th><th>email</th><th>phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="contact : ${contacts}">
+            <th th:text="${contact.id()}">7</th>
+            <th th:text="${contact.firstName()}">George</th>
+            <th th:text="${contact.lastName()}">Watson</th>
+            <th th:text="${contact.email()}">some@email.mail</th>
+            <th th:text="${contact.phone()}">+111222333444</th>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
