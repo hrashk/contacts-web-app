@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 @Component
 @ConditionalOnProperty("app.contacts.generate")
 @RequiredArgsConstructor
-public class ContactsGenerator implements CommandLineRunner {
+public class ContactsInitializer implements CommandLineRunner {
     private final ContactsService service;
 
     @Override

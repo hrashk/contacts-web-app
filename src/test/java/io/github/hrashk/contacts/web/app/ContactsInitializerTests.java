@@ -16,12 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest(properties = "app.contacts.generate=true")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({ContactsService.class, ContactsRepository.class})
-public class ContactsGeneratorTests {
+public class ContactsInitializerTests {
     @Autowired
     private ContactsService service;
 
     @MockBean
-    private ContactsGenerator generator;
+    private ContactsInitializer generator;
 
     @Test
     void generatorIsCalled() throws Exception {
@@ -30,7 +30,7 @@ public class ContactsGeneratorTests {
 
     @Test
     void generatesSomeContacts() throws Exception {
-        var localGen = new ContactsGenerator(service);
+        var localGen = new ContactsInitializer(service);
         localGen.run();
 
         var contacts = service.findAllContacts();
@@ -39,7 +39,7 @@ public class ContactsGeneratorTests {
 
     @Test
     void doesNotGenerateIfNotEmpty() throws Exception {
-        var localGen = new ContactsGenerator(service);
+        var localGen = new ContactsInitializer(service);
 
         localGen.run();
         int intitalCount = service.findAllContacts().size();

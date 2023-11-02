@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest(properties = "app.contacts.generate=false")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({ContactsService.class, ContactsRepository.class, ContactsGenerator.class})
+@Import({ContactsService.class, ContactsRepository.class, ContactsInitializer.class})
 public class CleanRepoTests {
     @Autowired
     private ContactsService service;
