@@ -14,11 +14,11 @@
     </thead>
     <tbody>
         <tr th:each="contact : ${contacts}">
-            <th th:text="${contact.id()}">7</th>
-            <th th:text="${contact.firstName()}">George</th>
-            <th th:text="${contact.lastName()}">Watson</th>
-            <th th:text="${contact.email()}">some@email.mail</th>
-            <th th:text="${contact.phone()}">+111222333444</th>
+            <td th:text="${contact.id()}">7</td>
+            <td th:text="${contact.firstName()}">George</td>
+            <td th:text="${contact.lastName()}">Watson</td>
+            <td th:text="${contact.email()}">some@email.mail</td>
+            <td th:text="${contact.phone()}">+111222333444</td>
         </tr>
     </tbody>
 </table>
