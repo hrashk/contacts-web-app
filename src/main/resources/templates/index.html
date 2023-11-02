@@ -19,9 +19,15 @@
             <td th:text="${contact.lastName()}">Watson</td>
             <td th:text="${contact.email()}">some@email.mail</td>
             <td th:text="${contact.phone()}">+111222333444</td>
+            <td>
+                <a th:href="@{|/edit/${contact.id()}|}">Edit</a>
+                <a th:href="@{|/delete/${contact.id()}|}">Delete</a>
+            </td>
         </tr>
     </tbody>
 </table>
+
+<p><a th:href="@{/create}">Create contact</a></p>
 
 </body>
 </html>
