@@ -1,13 +1,16 @@
 package io.github.hrashk.contacts.web.app;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ContactsService {
+    private final ContactsRepository repository;
+
     public Collection<Contact> findAllContacts() {
-        return List.of();
+        return repository.findAll();
     }
 }
