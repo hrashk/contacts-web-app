@@ -34,16 +34,17 @@ public class ContactsGenerator implements CommandLineRunner {
     private static Contact aRandomContact(Faker f) {
         String firstName = f.name().firstName();
         String lastName = f.name().lastName();
-        String email = String.format("%s.%s@%s",
+        String localPart = String.format("%s.%s",
                 firstName.toLowerCase(),
-                lastName.toLowerCase(),
-                f.internet().domainName());
+                lastName.toLowerCase());
+        String email = f.internet().emailAddress(localPart);
+
         return Contact.builder()
                 .id(0)  // ignored
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
-                .phone(f.phoneNumber().phoneNumber())
+                .phone(f.phoneNumber().phoneNumberInternational())
                 .build();
     }
 }
