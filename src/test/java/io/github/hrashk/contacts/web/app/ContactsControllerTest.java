@@ -26,15 +26,11 @@ class ContactsControllerTest {
     @MockBean
     private ContactsService service;
 
+    private final ContactsGenerator generator = new ContactsGenerator();
+
     @Test
     void show() throws Exception {
-        List<Contact> sample = List.of(
-                new Contact(1, "Loren", "Jackson", "a@b.com", "+23334446556"),
-                new Contact(2, "Laren", "Jbckson", "b@b.com", "+23334446557"),
-                new Contact(3, "Leren", "Jcckson", "c@b.com", "+23334446558"),
-                new Contact(4, "Liren", "Jdckson", "d@b.com", "+23334446559"),
-                new Contact(5, "Luren", "Jeckson", "e@b.com", "+23334446555")
-        );
+        List<Contact> sample = generator.generate(5);
         Mockito.when(service.findAllContacts()).thenReturn(sample);
 
 
