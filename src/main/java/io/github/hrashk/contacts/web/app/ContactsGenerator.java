@@ -18,6 +18,9 @@ public class ContactsGenerator implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        if (!service.findAllContacts().isEmpty())
+            return;
+
         var random = ThreadLocalRandom.current();
         int numberOfContacts = random.nextInt(7, 13);
         Faker f = new Faker(random);

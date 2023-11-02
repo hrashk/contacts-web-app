@@ -36,4 +36,17 @@ public class ContactsGeneratorTests {
         var contacts = service.findAllContacts();
         assertThat(contacts).hasSizeGreaterThan(5);
     }
+
+    @Test
+    void doesNotGenerateIfNotEmpty() throws Exception {
+        var localGen = new ContactsGenerator(service);
+
+        localGen.run();
+        int intitalCount = service.findAllContacts().size();
+
+        localGen.run();
+
+        var contacts = service.findAllContacts();
+        assertThat(contacts).hasSize(intitalCount);
+    }
 }
