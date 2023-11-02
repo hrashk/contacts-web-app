@@ -15,8 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ContactsController.class)
 class ContactsControllerTest {
@@ -47,5 +46,15 @@ class ContactsControllerTest {
         int numberOfHeaderRows = 1;
         int expectedNumberOfRows = sample.size() + numberOfHeaderRows;
         assertThat(numberOfTableRows).isEqualTo(expectedNumberOfRows);
+    }
+
+    @Test
+    void delete() throws Exception {
+        mvc.perform(get("/delete/13"))
+                .andExpectAll(
+                        status().is3xxRedirection(),
+                        redirectedUrl("/")
+                );
+        Mockito.verify(service).deleteContact(Mockito.eq(13));
     }
 }

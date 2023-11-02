@@ -22,4 +22,18 @@ class ContactsServiceTest {
         var contacts = service.findAllContacts();
         assertThat(contacts).hasSize(5);
     }
+
+    @Test
+    void deleteContact() {
+        var contacts = service.findAllContacts();
+        Contact firstContact = contacts.iterator().next();
+
+        service.deleteContact(firstContact.id());
+
+        var newContacts = service.findAllContacts();
+        assertThat(newContacts).hasSize(contacts.size() - 1);
+
+        var remainingContactIds = newContacts.stream().map(Contact::id).toList();
+        assertThat(remainingContactIds).doesNotContain(firstContact.id());
+    }
 }

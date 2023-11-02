@@ -35,4 +35,8 @@ public class ContactsRepository {
     public void clear() {
         jdbc.execute("truncate table contacts");
     }
+
+    public void deleteById(int id) {
+        jdbc.update("delete from contacts where id = ?", id);
+    }
 }
