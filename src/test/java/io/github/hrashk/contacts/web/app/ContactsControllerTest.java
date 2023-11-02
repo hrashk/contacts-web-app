@@ -57,4 +57,14 @@ class ContactsControllerTest {
                 );
         Mockito.verify(service).deleteContact(Mockito.eq(13));
     }
+
+    @Test
+    void showCreatePage() throws Exception {
+        mvc.perform(get("/create"))
+                .andExpectAll(
+                        status().isOk(),
+                        content().contentTypeCompatibleWith(MediaType.TEXT_HTML),
+                        content().string(stringContainsInOrder("<label"))
+                );
+    }
 }

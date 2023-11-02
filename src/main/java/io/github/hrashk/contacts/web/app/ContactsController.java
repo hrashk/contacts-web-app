@@ -24,4 +24,10 @@ public class ContactsController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/create")
+    public String createForm() {
+
+        return "create";
+    }
 }
