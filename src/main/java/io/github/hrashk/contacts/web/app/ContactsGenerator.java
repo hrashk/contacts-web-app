@@ -1,6 +1,7 @@
 package io.github.hrashk.contacts.web.app;
 
 import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -18,20 +19,28 @@ public class ContactsGenerator implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         var random = ThreadLocalRandom.current();
+        int numberOfContacts = random.nextInt(7, 13);
+        Faker f = new Faker(random);
 
-        List<Contact> contacts = IntStream.range(0, random.nextInt(7, 13))
-                .mapToObj(idx -> aRandomContact())
+        List<Contact> contacts = IntStream.range(0, numberOfContacts)
+                .mapToObj(idx -> aRandomContact(f))
                 .toList();
         service.addAllContacts(contacts);
     }
 
-    private static Contact aRandomContact() {
+    private static Contact aRandomContact(Faker f) {
+        String firstName = f.name().firstName();
+        String lastName = f.name().lastName();
+        String email = String.format("%s.%s@%s",
+                firstName.toLowerCase(),
+                lastName.toLowerCase(),
+                f.internet().domainName());
         return Contact.builder()
                 .id(0)  // ignored
-                .firstName("Uasya")
-                .lastName("Pupkin")
-                .email("a@b.com")
-                .phone("+777712341234")
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .phone(f.phoneNumber().phoneNumber())
                 .build();
     }
 }
