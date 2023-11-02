@@ -13,4 +13,12 @@ public class ContactsService {
     public Collection<Contact> findAllContacts() {
         return repository.findAll();
     }
+
+    public void addAllContacts(Collection<Contact> contact) {
+        repository.addAll(contact);
+    }
+
+    public void clearContacts() {
+        repository.clear();
+    }
 }
