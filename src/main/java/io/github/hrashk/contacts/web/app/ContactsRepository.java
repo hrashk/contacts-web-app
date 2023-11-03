@@ -5,7 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Collection;
 
 @Repository
@@ -15,13 +17,17 @@ public class ContactsRepository {
     private final JdbcTemplate jdbc;
 
     public Collection<Contact> findAll() {
-        return jdbc.query("select * from contacts", (rs, rowNum) -> Contact.builder()
+        return jdbc.query("select * from contacts", (rs, rowNum) -> contactMapper(rs));
+    }
+
+    private static Contact contactMapper(ResultSet rs) throws SQLException {
+        return Contact.builder()
                 .id(rs.getInt("id"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .email(rs.getString("email"))
                 .phone(rs.getString("phone"))
-                .build());
+                .build();
     }
 
     public void addAll(Collection<Contact> contacts) {
@@ -45,5 +51,11 @@ public class ContactsRepository {
 
     public void add(Contact contact) {
         jdbc.update(INSERT_SQL, ps -> setInsertParams(ps, contact));
+    }
+
+    public Contact findById(int id) {
+        return jdbc.queryForObject("select * from contacts where id = ?",
+                new Object[]{id}, new int[]{Types.INTEGER},
+                (rs, rowNum) -> contactMapper(rs));
     }
 }

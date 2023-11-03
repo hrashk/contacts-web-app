@@ -48,4 +48,14 @@ class ContactsServiceTest {
         assertThat(newContacts).hasSize(originalSize + 1);
         assertThat(newContacts).anyMatch(c -> c.similarTo(contact));
     }
+
+    @Test
+    void findById() {
+        var contacts = service.findAllContacts();
+        Contact firstContact = contacts.iterator().next();
+
+        Contact found = service.findById(firstContact.id());
+
+        assertThat(found).isEqualTo(firstContact);
+    }
 }

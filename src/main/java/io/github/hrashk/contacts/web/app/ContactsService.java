@@ -31,6 +31,6 @@ public class ContactsService {
     }
 
     public Contact findById(int id) {
-        return null;
+        return repository.findById(id);
     }
 }
