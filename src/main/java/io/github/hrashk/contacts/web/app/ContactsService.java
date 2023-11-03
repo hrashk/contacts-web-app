@@ -27,6 +27,6 @@ public class ContactsService {
     }
 
     public void createContact(Contact contact) {
-
+        repository.add(contact);
     }
 }

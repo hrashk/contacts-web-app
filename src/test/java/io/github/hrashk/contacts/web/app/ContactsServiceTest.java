@@ -36,4 +36,16 @@ class ContactsServiceTest {
         var remainingContactIds = newContacts.stream().map(Contact::id).toList();
         assertThat(remainingContactIds).doesNotContain(firstContact.id());
     }
+
+    @Test
+    void createContact() {
+        int originalSize = service.findAllContacts().size();
+        Contact contact = new Contact(777, "", "", "", "");
+
+        service.createContact(contact);
+
+        var newContacts = service.findAllContacts();
+        assertThat(newContacts).hasSize(originalSize + 1);
+        assertThat(newContacts).anyMatch(c -> c.similarTo(contact));
+    }
 }

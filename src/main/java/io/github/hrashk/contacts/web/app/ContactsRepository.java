@@ -9,6 +9,7 @@ import java.util.Collection;
 @Repository
 @RequiredArgsConstructor
 public class ContactsRepository {
+    private static final String INSERT_SQL = "insert into contacts (first_name, last_name, email, phone) values (?, ?, ?, ?)";
     private final JdbcTemplate jdbc;
 
     public Collection<Contact> findAll() {
@@ -23,7 +24,7 @@ public class ContactsRepository {
 
     public void addAll(Collection<Contact> contacts) {
         jdbc.batchUpdate(
-                "insert into contacts (first_name, last_name, email, phone) values (?, ?, ?, ?)",
+                INSERT_SQL,
                 contacts, contacts.size(), (ps, c) -> {
                     ps.setString(1, c.firstName());
                     ps.setString(2, c.lastName());
@@ -38,5 +39,14 @@ public class ContactsRepository {
 
     public void deleteById(int id) {
         jdbc.update("delete from contacts where id = ?", id);
+    }
+
+    public void add(Contact contact) {
+        jdbc.update(INSERT_SQL, ps -> {
+            ps.setString(1, contact.firstName());
+            ps.setString(2, contact.lastName());
+            ps.setString(3, contact.email());
+            ps.setString(4, contact.phone());
+        });
     }
 }
