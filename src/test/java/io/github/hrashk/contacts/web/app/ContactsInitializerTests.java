@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +31,8 @@ public class ContactsInitializerTests {
 
     @Test
     void generatesSomeContacts() throws Exception {
+        service.clearContacts();
+
         var localGen = new ContactsInitializer(service);
         localGen.run();
 
@@ -38,10 +41,10 @@ public class ContactsInitializerTests {
     }
 
     @Test
+    @Sql("classpath:sample.sql")
     void doesNotGenerateIfNotEmpty() throws Exception {
         var localGen = new ContactsInitializer(service);
 
-        localGen.run();
         int intitalCount = service.findAllContacts().size();
 
         localGen.run();
