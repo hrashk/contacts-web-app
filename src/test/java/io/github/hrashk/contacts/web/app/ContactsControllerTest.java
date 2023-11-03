@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -65,7 +66,7 @@ class ContactsControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         content().contentTypeCompatibleWith(MediaType.TEXT_HTML),
-                        content().string(stringContainsInOrder("<label"))
+                        content().string(containsString("<label"))
                 );
     }
 
@@ -79,5 +80,17 @@ class ContactsControllerTest {
                         redirectedUrl("/")
                 );
         Mockito.verify(service).createContact(Mockito.any(Contact.class));
+    }
+
+    @Test
+    void showEditForm() throws Exception {
+        Mockito.when(service.findById(Mockito.anyInt())).thenReturn(Contact.builder().id(13712377).build());
+
+        mvc.perform(get("/edit/13712377"))
+                .andExpectAll(
+                        status().isOk(),
+                        content().contentTypeCompatibleWith(MediaType.TEXT_HTML),
+                        content().string(stringContainsInOrder("13712377", "<label"))
+                );
     }
 }

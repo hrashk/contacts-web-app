@@ -27,7 +27,9 @@ public class ContactsController {
     }
 
     @GetMapping("/create")
-    public String showCreateForm() {
+    public String showCreateForm(Model model) {
+        model.addAttribute("contact", Contact.builder().id(0).build());
+
         return "create";
     }
 
@@ -36,5 +38,13 @@ public class ContactsController {
         service.createContact(contact);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        model.addAttribute("isEdit", true);
+        model.addAttribute("contact", service.findById(id));
+
+        return "create";
     }
 }
