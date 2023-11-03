@@ -9,21 +9,30 @@
 <h1>Create Contact</h1>
 
 <form action="/create" method="post">
+    <input type="hidden" name="id" value="0"/>
     <div>
-        <label for="fistName">First name</label>
-        <input type="text" id="fistName"/>
+        <label>
+            First name
+            <input type="text" name="fistName"/>
+        </label>
     </div>
     <div>
-        <label for="lastName">Last name</label>
-        <input type="text" id="lastName"/>
+        <label>
+            Last name
+            <input type="text" name="lastName"/>
+        </label>
     </div>
     <div>
-        <label for="email">Email</label>
-        <input type="email" id="email"/>
+        <label>
+            Email
+            <input type="email" name="email"/>
+        </label>
     </div>
     <div>
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone"/>
+        <label>
+            Phone
+            <input type="tel" name="phone"/>
+        </label>
     </div>
     <button type="submit">Save</button>
 </form>
