@@ -48,4 +48,11 @@ public class ContactsController {
 
         return "create";
     }
+
+    @PostMapping("/edit")
+    public String edit(Contact contact) {
+        service.editContact(contact);
+
+        return "redirect:/";
+    }
 }

@@ -93,4 +93,16 @@ class ContactsControllerTest {
                         content().string(stringContainsInOrder("13712377", "<label"))
                 );
     }
+
+    @Test
+    void edit() throws Exception {
+        mvc.perform(post("/edit")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("id=123&fistName=Aleph&lastName=Nullseon&email=a@b.com&phone=+79031234"))
+                .andExpectAll(
+                        status().is3xxRedirection(),
+                        redirectedUrl("/")
+                );
+        Mockito.verify(service).editContact(Mockito.any(Contact.class));
+    }
 }

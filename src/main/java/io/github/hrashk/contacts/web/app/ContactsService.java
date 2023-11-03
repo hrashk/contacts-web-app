@@ -33,4 +33,8 @@ public class ContactsService {
     public Contact findById(int id) {
         return repository.findById(id);
     }
+
+    public void editContact(Contact contact) {
+
+    }
 }
