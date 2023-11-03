@@ -15,6 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ContactsController.class)
@@ -59,12 +60,24 @@ class ContactsControllerTest {
     }
 
     @Test
-    void showCreatePage() throws Exception {
+    void showCreateForm() throws Exception {
         mvc.perform(get("/create"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentTypeCompatibleWith(MediaType.TEXT_HTML),
                         content().string(stringContainsInOrder("<label"))
                 );
+    }
+
+    @Test
+    void create() throws Exception {
+        mvc.perform(post("/create")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("id=0&fistName=Aleph&lastName=Nullseon&email=a@b.com&phone=+79031234"))
+                .andExpectAll(
+                        status().is3xxRedirection(),
+                        redirectedUrl("/")
+                );
+        Mockito.verify(service).createContact(Mockito.any(Contact.class));
     }
 }

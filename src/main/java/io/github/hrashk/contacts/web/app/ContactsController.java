@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,8 +27,14 @@ public class ContactsController {
     }
 
     @GetMapping("/create")
-    public String createForm() {
-
+    public String showCreateForm() {
         return "create";
+    }
+
+    @PostMapping("/create")
+    public String create(Contact contact) {
+        service.createContact(contact);
+
+        return "redirect:/";
     }
 }

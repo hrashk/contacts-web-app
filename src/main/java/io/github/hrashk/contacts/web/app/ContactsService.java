@@ -25,4 +25,8 @@ public class ContactsService {
     public void deleteContact(int id) {
         repository.deleteById(id);
     }
+
+    public void createContact(Contact contact) {
+
+    }
 }
