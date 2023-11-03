@@ -31,10 +31,10 @@ public class ContactsRepository {
     }
 
     public void addAll(Collection<Contact> contacts) {
-        jdbc.batchUpdate(INSERT_SQL, contacts, contacts.size(), ContactsRepository::setInsertParams);
+        jdbc.batchUpdate(INSERT_SQL, contacts, contacts.size(), ContactsRepository::setPreparedParams);
     }
 
-    private static void setInsertParams(PreparedStatement ps, Contact c) throws SQLException {
+    private static void setPreparedParams(PreparedStatement ps, Contact c) throws SQLException {
         ps.setString(1, c.firstName());
         ps.setString(2, c.lastName());
         ps.setString(3, c.email());
@@ -50,12 +50,20 @@ public class ContactsRepository {
     }
 
     public void add(Contact contact) {
-        jdbc.update(INSERT_SQL, ps -> setInsertParams(ps, contact));
+        jdbc.update(INSERT_SQL, ps -> setPreparedParams(ps, contact));
     }
 
     public Contact findById(int id) {
         return jdbc.queryForObject("select * from contacts where id = ?",
                 new Object[]{id}, new int[]{Types.INTEGER},
                 (rs, rowNum) -> contactMapper(rs));
+    }
+
+    public void edit(Contact contact) {
+        jdbc.update("update contacts set first_name=?, last_name=?, email=?, phone=? where id = ?",
+                ps -> {
+                    setPreparedParams(ps, contact);
+                    ps.setInt(5, contact.id());
+                });
     }
 }

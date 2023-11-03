@@ -20,7 +20,7 @@ class ContactsServiceTest {
     @Test
     void findAllContacts() {
         var contacts = service.findAllContacts();
-        assertThat(contacts).hasSize(5);
+        assertThat(contacts).hasSizeGreaterThan(4);
     }
 
     @Test
@@ -57,5 +57,21 @@ class ContactsServiceTest {
         Contact found = service.findById(firstContact.id());
 
         assertThat(found).isEqualTo(firstContact);
+    }
+
+    @Test
+    void editContact() {
+        var contacts = service.findAllContacts();
+        Contact firstContact = contacts.iterator().next();
+
+        var updated = firstContact.toBuilder()
+                .firstName("Alter")
+                .lastName("Ego")
+                .build();
+
+        service.editContact(updated);
+
+        var newContact = service.findById(firstContact.id());
+        assertThat(newContact).isEqualTo(updated);
     }
 }

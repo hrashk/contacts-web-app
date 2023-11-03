@@ -4,7 +4,7 @@ import lombok.Builder;
 
 import java.util.Objects;
 
-@Builder
+@Builder(toBuilder = true)
 public record Contact(int id, String firstName, String lastName, String email, String phone) {
     public boolean similarTo(Contact other) {
         return Objects.equals(firstName, other.firstName) &&

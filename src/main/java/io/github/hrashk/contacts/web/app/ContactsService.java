@@ -35,6 +35,6 @@ public class ContactsService {
     }
 
     public void editContact(Contact contact) {
-
+        repository.edit(contact);
     }
 }
