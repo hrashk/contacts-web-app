@@ -28,6 +28,7 @@ public class ContactsController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
+        model.addAttribute("isEdit", false);
         model.addAttribute("contact", Contact.builder().id(0).build());
 
         return "create";

@@ -2,38 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:if="!isEdit">Create Contact</title>
-    <title th:if="isEdit">Edit Contact</title>
+    <title th:text="${isEdit ? 'Edit Contact' : 'Create Contact'}">Create Contact</title>
 </head>
 <body>
 
-<h1 th:if="!isEdit">Create Contact</h1>
-<h1 th:if="isEdit">Edit Contact <span th:text="${contact.id()}">13</span></h1>
+<h1 th:text="${isEdit ? 'Edit Contact ' + contact.id() : 'Create Contact'}">Create Contact</h1>
 
 <form action="/create" method="post">
     <input type="hidden" name="id" value="0" th:value="${contact.id()}"/>
     <div>
         <label>
             First name
-            <input type="text" name="firstName"/>
+            <input type="text" name="firstName" th:value="${contact.firstName()}"/>
         </label>
     </div>
     <div>
         <label>
             Last name
-            <input type="text" name="lastName"/>
+            <input type="text" name="lastName" th:value="${contact.lastName()}"/>
         </label>
     </div>
     <div>
         <label>
             Email
-            <input type="email" name="email"/>
+            <input type="email" name="email" th:value="${contact.email()}"/>
         </label>
     </div>
     <div>
         <label>
             Phone
-            <input type="tel" name="phone"/>
+            <input type="tel" name="phone" th:value="${contact.phone()}"/>
         </label>
     </div>
     <button type="submit">Save</button>
