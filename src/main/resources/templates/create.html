@@ -8,7 +8,7 @@
 
 <h1 th:text="${isEdit ? 'Edit Contact ' + contact.id() : 'Create Contact'}">Create Contact</h1>
 
-<form action="/create" method="post">
+<form action="/create" method="post" th:action="${isEdit ? '/edit' : '/create'}">
     <input type="hidden" name="id" value="0" th:value="${contact.id()}"/>
     <div>
         <label>
