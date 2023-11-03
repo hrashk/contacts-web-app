@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 
 @Repository
@@ -23,14 +25,14 @@ public class ContactsRepository {
     }
 
     public void addAll(Collection<Contact> contacts) {
-        jdbc.batchUpdate(
-                INSERT_SQL,
-                contacts, contacts.size(), (ps, c) -> {
-                    ps.setString(1, c.firstName());
-                    ps.setString(2, c.lastName());
-                    ps.setString(3, c.email());
-                    ps.setString(4, c.phone());
-                });
+        jdbc.batchUpdate(INSERT_SQL, contacts, contacts.size(), ContactsRepository::setInsertParams);
+    }
+
+    private static void setInsertParams(PreparedStatement ps, Contact c) throws SQLException {
+        ps.setString(1, c.firstName());
+        ps.setString(2, c.lastName());
+        ps.setString(3, c.email());
+        ps.setString(4, c.phone());
     }
 
     public void clear() {
@@ -42,11 +44,6 @@ public class ContactsRepository {
     }
 
     public void add(Contact contact) {
-        jdbc.update(INSERT_SQL, ps -> {
-            ps.setString(1, contact.firstName());
-            ps.setString(2, contact.lastName());
-            ps.setString(3, contact.email());
-            ps.setString(4, contact.phone());
-        });
+        jdbc.update(INSERT_SQL, ps -> setInsertParams(ps, contact));
     }
 }
