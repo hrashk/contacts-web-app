@@ -32,12 +32,11 @@ public class ContactsInitializerTests {
     @Test
     void generatesSomeContacts() throws Exception {
         service.clearContacts();
+        assertThat(service.findAllContacts()).isEmpty();
 
-        var localGen = new ContactsInitializer(service);
-        localGen.run();
+        new ContactsInitializer(service).run();
 
-        var contacts = service.findAllContacts();
-        assertThat(contacts).hasSizeGreaterThan(5);
+        assertThat(service.findAllContacts()).hasSizeGreaterThan(5);
     }
 
     @Test
@@ -45,11 +44,10 @@ public class ContactsInitializerTests {
     void doesNotGenerateIfNotEmpty() throws Exception {
         var localGen = new ContactsInitializer(service);
 
-        int intitalCount = service.findAllContacts().size();
+        int initialCount = service.findAllContacts().size();
 
         localGen.run();
 
-        var contacts = service.findAllContacts();
-        assertThat(contacts).hasSize(intitalCount);
+        assertThat(service.findAllContacts()).hasSize(initialCount);
     }
 }

@@ -46,7 +46,7 @@ class ContactsServiceTest {
 
         var newContacts = service.findAllContacts();
         assertThat(newContacts).hasSize(originalSize + 1);
-        assertThat(newContacts).anyMatch(c -> c.isSimilarTo(contact));
+        assertThat(newContacts).anyMatch(contact::isSimilarTo);
     }
 
     @Test
