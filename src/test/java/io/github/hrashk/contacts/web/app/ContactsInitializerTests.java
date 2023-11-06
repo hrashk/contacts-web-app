@@ -3,10 +3,9 @@ package io.github.hrashk.contacts.web.app;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * we have to be careful not to inject an actual generator bean, because it would make permanent changes to the db.
  */
-@JdbcTest(properties = "app.contacts.generate=true")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContainerJdbcTest
+@TestPropertySource(properties = "app.contacts.generate=true")
 @Import({ContactsService.class, ContactsRepository.class})
 public class ContactsInitializerTests {
     @Autowired
