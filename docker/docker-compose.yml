@@ -8,4 +8,4 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=contacts
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql

@@ -3,24 +3,18 @@
 ```bash
 mvn clean package
 ```
-will compile the app, run the unit tests and produce an uber-jar in the target folder. The package contains mostly
-integration tests that expect a running postgres instance, as described in the next section. You may skip the tests
-as follows
-
-```bash
-mvn clean package -DskipTests
-```
+will compile the app, run the unit tests and produce an uber-jar in the target folder.
 
 ## Running the app
 You will need a running postgres instance that you can spin up with docker-compose.
 
 ```bash
-docker compose -f src/main/resources/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 You may stop the instance once you're finished.
 ```bash
-docker compose -f src/main/resources/docker-compose.yml down
+docker compose -f docker/docker-compose.yml down
 ```
 
 Once postgres is up, run the app itself
